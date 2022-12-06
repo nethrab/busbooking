@@ -1,0 +1,180 @@
+/******************************************************************************
+Name : Nethra B
+Structures based on bus
+*******************************************************************************/
+#include <stdio.h>
+#include<string.h>
+FILE *ptr,*fp,*fp1;      // File pointer is initialized for each type of type 
+typedef struct // sleeper structure is initialized
+{
+    int bus_number1;
+    int seat_number1;
+    int cost1;
+}sleeper;
+typedef struct // semi structure is initialized
+{
+    int bus_number2;
+    int seat_number2;
+    int cost2;
+}semi;
+typedef struct //  ultra structure is initialized
+{
+    int bus_number3;
+    int seat_number3;
+    int cost3;
+}ultra;
+
+struct bus     //User defined data type bus is created as a nested structure
+{
+  sleeper a;
+  semi d;
+  ultra c;
+}b[20];
+void ticket_booking(int ch,int n,struct bus b[]); // function for booking
+
+int main()
+{
+    int n,i,ch,tot,c,d_no,d_seat_d_cost;
+    printf("Enter atleast 1 data for each bus type"); 
+    printf("Enter value of n: "); //for the number of buses
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {   
+        printf("\nEnter bus type:");// values are got from the user
+        printf("\nEnter\n 1 for sleeper \n2.semi-sleeper deluxe \n3.ultra-deluxe\n ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: printf("\nSleeper");
+                    break;
+            case 2: printf("\nsemi-sleeper deluxe");
+                    break;
+            case 3: printf("\nUltra deluxe");
+                    break;
+            default: printf("\nEnter proper choice");
+                     break;
+                    
+        }
+        if(ch==1)
+        {
+            ptr=fopen("Sleeper.txt","a"); // file is opened
+            printf("\nYou have choosen Sleeper class:");
+            printf("\n Enter bus number:");
+            scanf("%d",&b[i].a.bus_number1);
+            fprintf(ptr,"\n%d ",b[i].a.bus_number1);   // values are entered in the file Sleeper.txt
+            printf("Enter Number of seats:");
+            scanf("%d",&b[i].a.seat_number1);
+            fprintf(ptr,"\n%d ",b[i].a.bus_number1);  // values are entered in the file Sleeper.txt
+            printf("Enter Cost of each ticket:");
+            scanf("%d",&b[i].a.cost1);
+            fprintf(ptr,"\n%d ",b[i].a.cost1);        // values are entered in the file Sleeper.txt
+            fclose(ptr);// file is closed
+        }
+        else if(ch==2)
+        {
+            fp=fopen("semi-sleeper deluxe.txt","a"); // file is opened
+            printf("\nYou have choosen Semi-Sleeper deluxe class:");
+            printf("\n Enter bus number:");
+            scanf("%d",&b[i].d.bus_number2);  
+            fprintf(fp,"\n%d ",b[i].d.bus_number2);   // values are entered in the file Semi sleeper
+            printf("Enter Number of seats:");
+            scanf("%d",&b[i].d.seat_number2);
+            fprintf(fp,"\n%d ",b[i].d.seat_number2);  // values are entered in the file Semi sleeper
+            printf("Enter Cost of each ticket:");
+            scanf("%d",&b[i].d.cost2);
+            fprintf(fp,"\n%d ",b[i].d.cost2);        // values are entered in the file Semi sleeper
+            fclose(fp);// file is closed
+        }
+        else if(ch==3)
+        {
+            fp1=fopen("Ultra deluxe.txt","a");               // file is opened
+            printf("\nYou have choosen ultra-deluxe class:");
+            printf("\n Enter bus number:");
+            scanf("%d",&b[i].c.bus_number3);
+            fprintf(fp1,"\n %d ",b[i].c.bus_number3);    // values are entered in the file Ultra deluxe.txt
+            printf("Enter Number of seats:");
+            scanf("%d",&b[i].c.seat_number3);
+            fprintf(fp1,"\n %d ",b[i].c.seat_number3);  // values are entered in the file Ultra deluxe.txt
+            printf("Enter Cost of each ticket:");
+            scanf("%d",&b[i].c.cost3);
+            fprintf(fp1,"\n %d ",b[i].c.cost3);        // values are entered in the file Ultra deluxe.txt
+            fclose(fp1);                              // file is closed
+        }
+    }
+    printf("\n-------------------------Ticket Booking------------------------");
+    printf("Enter number of times booking to be done");
+    scanf("%d",&tot);
+    for(i=0;i<tot;i++){
+        printf("\nEnter bus type:");
+        printf("\nEnter\n 1 for sleeper \n2.semi-sleeper deluxe \n3.ultra-deluxe\n ");
+        scanf("%d",&c);
+        switch(c)
+        {
+            case 1: printf("\nSleeper");
+                    break;
+            case 2: printf("\nsemi-sleeper deluxe");
+                    break;
+            case 3: printf("\nUltra deluxe");
+                    break;
+            default: printf("\nEnter proper choice");
+                     break;
+                    
+        }
+        ticket_booking(c,n,b);
+        
+    }
+    return 0;
+}
+void ticket_booking(int ch,int n,struct bus b[])
+{
+    int i,x=0,total=0,price=0,cost=0;
+    if(ch==1)
+    {
+        printf("\nSleeper class ticket booking:");
+        printf("Available bus numbers and number of tickets and cost");
+        for(i=0;i<n;i++)
+        {
+            printf("%d %d %d",b[i].a.bus_number1,b[i].a.seat_number1,b[i].a.cost1);
+            total +=b[i].a.seat_number1;
+            cost = b[i].a.cost1;
+        }
+        printf("\nEnter the number of tickets to purchase:");
+        scanf("%d",&x);
+        price = x*cost;
+        printf("Cost of purchase:%d", price);
+        printf("\nRemaining Seats: %d ", (total-x));
+    }
+    if(ch==2)
+    {
+        printf("\nsemi-sleeper deluxe ticket booking:");
+        printf("Available bus numbers and number of tickets and cost");
+        for(i=0;i<n;i++)
+        {
+            printf("%d %d %d",b[i].d.bus_number2,b[i].d.seat_number2,b[i].d.cost2);
+            total +=b[i].a.seat_number1;
+            cost = b[i].d.cost2;
+        }
+        printf("\nEnter the number of tickets to purchase:");
+        scanf("%d",&x);
+        price = x*cost;
+        printf("Cost of purchase:%d", price);
+        printf("\nRemaining Seats: %d ", (total-x));
+    }
+    if(ch==3)
+    {
+        printf("\nSleeper class ticket booking:");
+        printf("Available bus numbers and number of tickets and cost");
+        for(i=0;i<n;i++)
+        {
+             printf("%d %d %d",b[i].c.bus_number3,b[i].c.seat_number3,b[i].c.cost3);
+            total +=b[i].c.seat_number3;
+            cost = b[i].c.cost3;
+        }
+        printf("\nEnter the number of tickets to purchase:");
+        scanf("%d",&x);
+        price = x*cost;
+        printf("Cost of purchase:%d", price);
+        printf("\nRemaining Seats: %d ", (total-x));
+    }
+    
+}
